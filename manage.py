@@ -6,6 +6,7 @@
 import pandas as pd
 import numpy as np
 from flask import Flask, jsonify, request
+import json
 # Evaluation and model selection
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -22,9 +23,10 @@ for column in columns:
     df[column].replace(0, np.floor(mean), inplace=True)
 # Data Optimiztion
 df['Pregnancies'][df.Pregnancies > 0] = 1
+auxData = df.drop('Outcome', axis=1)
+df[columns] = sc.fit_transform(df[columns])
 df['DiabetesPedigreeFunction'] = df['DiabetesPedigreeFunction'].apply(
     lambda x: 1/(1+np.exp(-x)))
-df[columns] = sc.fit_transform(df[columns])
 # Split training data
 Outcome = df.Outcome
 newDf = df.drop('Outcome', axis=1)
@@ -34,28 +36,31 @@ trainingData_x, testData_x, trainingData_y, testData_y = train_test_split(
 logReg.fit(trainingData_x, trainingData_y)
 # Flask server
 app = Flask(__name__)
-print(logReg.score(testData_x, testData_y))
+print("Model accuracy:", logReg.score(testData_x, testData_y))
 
 
 @app.route("/prediction", methods=['GET', 'POST'])
 def prediction():
     try:
-        Preg = request.form['Pregnancy']
-        Gluc = request.form['Glucose']
-        BP = request.form['BloodPressure']
-        ST = request.form['SkinThickness']
-        Insul = request.form['Insulin']
-        BMI = request.form['BMI']
-        DPF = request.form['DiabetesPedigreeFunction']
-        DPF = 1/(1+np.exp(-DPF))
-        Age = request.form['Age']
-        arr = [Gluc, BP, ST, Insul, BMI, DPF]
-        arr = sc.fit_transform(arr)
-        arr.append(Age)
-        arr.insert(Preg, 0)
-        print(arr)
-        json = jsonify({"Prediction": logReg.predict([arr])[0]})
-        return json
+        arr = []
+        # Fill Array
+        for requests in request.form:
+            if(requests != 'Pregnancy' or requests != 'Age'):
+                arr.append([str(requests), float(request.form[requests])])
+        test = json.dumps(arr)
+        # Convert it to data frame
+        dataN = pd.read_json(test).T
+        headers = dataN.iloc[0]
+        dataN = pd.DataFrame(dataN.values[1:], columns=headers)
+        # Clean Input Data
+        dataN['DiabetesPedigreeFunction'] = dataN['DiabetesPedigreeFunction'].apply(
+            lambda x: 1/(1+np.exp(-x)))
+        dataN['Pregnancies'][dataN.Pregnancies > 0] = 1
+        newAuxData = auxData.append(dataN)
+        newAuxData[columns] = sc.fit_transform(newAuxData[columns])
+        dataN = newAuxData.iloc[-1:]
+        jsont = jsonify({"Prediction": str(logReg.predict(dataN)[0])})
+        return jsont
     except Exception as ex:
         print(ex)
         return jsonify({"Prediction": "An error has occured"})
