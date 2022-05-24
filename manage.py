@@ -61,4 +61,5 @@ def prediction():
         return jsonify({"Prediction": "An error has occured"})
 
 
-app.run()
+def create_app():
+    app.run()
