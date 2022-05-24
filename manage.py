@@ -5,7 +5,7 @@
 # Load needed libraries
 import pandas as pd
 import numpy as np
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 import json
 from waitress import serve
 # Evaluation and model selection
@@ -62,7 +62,7 @@ def prediction():
         print("test")
         dataN = newAuxData.iloc[-1:]
         jsont = jsonify({"Prediction": str(logReg.predict(dataN)[0])})
-        return jsont
+        return render_template('diabetes.html', positive=logReg.predict(dataN)[0])
     except Exception as ex:
         print(ex)
         return jsonify({"Prediction": "An error has occured"})
