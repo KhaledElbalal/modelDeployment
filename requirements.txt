@@ -3,4 +3,3 @@ gunicorn
 django-heroku
 numpy==1.9.1
 scikit-learn==0.16.1
-scipy==0.14.0
