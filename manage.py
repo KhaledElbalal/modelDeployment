@@ -69,5 +69,6 @@ def prediction():
 
 app.run(
     host="0.0.0.0",
-    port=80
+    port=80,
+    url_scheme='https'
 )
