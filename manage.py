@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from flask import Flask, jsonify, request
 import json
+from waitress import serve
 # Evaluation and model selection
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
@@ -67,8 +68,9 @@ def prediction():
         return jsonify({"Prediction": "An error has occured"})
 
 
-app.run(
+serve(
+    app,
     host="0.0.0.0",
-    port=80,
+    port=5000,
     url_scheme='https'
 )
