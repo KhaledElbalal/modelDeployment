@@ -61,11 +61,10 @@ def prediction():
         newAuxData[columns] = sc.fit_transform(newAuxData[columns])
         print("test")
         dataN = newAuxData.iloc[-1:]
-        jsont = jsonify({"Prediction": str(logReg.predict(dataN)[0])})
         return render_template('diabetes.html', positive=logReg.predict(dataN)[0])
     except Exception as ex:
         print(ex)
-        return jsonify({"Prediction": "An error has occured"})
+        return render_template('error.html')
 
 
 serve(

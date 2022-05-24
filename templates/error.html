@@ -1,0 +1,121 @@
+<!doctype html>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root {
+  font-family: "Urbanist", sans-serif;
+  font-size: 1rem;
+  --user-font-scale: 1rem - 16px;
+  font-size: clamp(
+    0.875rem,
+    0.4626rem + 1.0309vw + var(--user-font-scale),
+    1.125rem
+  );
+}
+.btn {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  transition-property: all;
+  transition-duration: 200ms;
+  color: #ffffff;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+.btn:hover {
+  color: black;
+  background-color: white;
+}
+body {
+  padding: 4rem 2rem;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  background: #f9fafb;
+  color: #111827;
+  scroll-behavior: smooth;
+}
+  .bg-brand {
+    background: #50b8ff;
+  }
+
+  h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: bold;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  p{    font-size: 1.175rem;
+    line-height: 1.625rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;}
+
+text-brand {
+  color: #50b8ff;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #50b8ff;
+    color: #f9fafb;
+  }
+  .btn {
+    background-color: #ffffff; 
+transition-property: all; 
+transition-duration: 200ms; 
+color: #000000; 
+  }
+  .btn:hover {
+    color: white;
+    background-color: #50b8ff;
+  }
+}
+@media (min-width: 1024px) {
+    .lg\:max-w-screen-lg {
+        max-width: 1024px;
+    }
+}
+@media (min-width: 1280px) {
+    .xl\:max-w-screen-xl {
+        max-width: 1280px;
+    }
+}
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+.mx-16 {
+    margin-left: 4rem/* 64px */;
+    margin-right: 4rem/* 64px */;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.text-center{
+  text-align: center;
+}
+</style>
+
+<title>An error has occured</title>
+<img src={{ url_for('static', filename='logo.svg') }} alt="Khaled Elbalal's logo" class="block mx-auto">
+<div class="lg:max-w-screen-lg xl:max-w-screen-xl mx-auto">
+  <div class="mx-16 text-center">
+    <h1>An error has occured</h1>
+    <a href="https://logreg.khaledelbalal.me/" class="btn inline-block">Return to home page</a>
+    <a href="https://github.com/KhaledElbalal" class="btn inline-block">Check out my Github</a>
+  </div>
+</div>
