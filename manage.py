@@ -54,7 +54,7 @@ def prediction():
         arr.append(Age)
         arr.insert(Preg, 0)
         print(arr)
-        json = jsonify({"Prediction": str(logReg.predict([arr])[0])})
+        json = jsonify({"Prediction": logReg.predict([arr])[0]})
         return json
     except Exception as ex:
         print(ex)
