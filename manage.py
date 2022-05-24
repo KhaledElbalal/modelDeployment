@@ -58,6 +58,7 @@ def prediction():
         dataN['Pregnancies'][dataN.Pregnancies > 0] = 1
         newAuxData = auxData.append(dataN)
         newAuxData[columns] = sc.fit_transform(newAuxData[columns])
+        print("test")
         dataN = newAuxData.iloc[-1:]
         jsont = jsonify({"Prediction": str(logReg.predict(dataN)[0])})
         return jsont
