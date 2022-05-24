@@ -1,5 +1,7 @@
 django
 gunicorn
 django-heroku
-numpy==1.9.1
-scikit-learn==0.16.1
+matplotlib>=2.2
+numpy>=1.15.0, <1.21.0
+pandas
+pytest==4.0.1
