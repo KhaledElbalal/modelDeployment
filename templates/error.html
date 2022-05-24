@@ -100,6 +100,10 @@ text-brand {
     margin-left: 4rem/* 64px */;
     margin-right: 4rem/* 64px */;
 }
+.my-8{
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
 .block {
   display: block;
 }
@@ -109,16 +113,20 @@ text-brand {
 .text-center{
   text-align: center;
 }
+.w-eighty {
+    width:80%;
+    height: auto;
+}
 </style>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
 <title>An error has occured</title>
-<img src={{ url_for('static', filename='logo.svg') }} alt="Khaled Elbalal's logo" class="block mx-auto">
 <div class="lg:max-w-screen-lg xl:max-w-screen-xl mx-auto">
+    <img src={{ url_for('static', filename='logo.svg') }} alt="Khaled Elbalal's logo" class="block mx-auto w-eighty">
   <div class="mx-16 text-center">
     <h1>An error has occured</h1>
-    <a href="https://logreg.khaledelbalal.me/" class="btn inline-block">Return to home page</a>
-    <a href="https://github.com/KhaledElbalal" class="btn inline-block">Check out my Github</a>
+    <a href="https://logreg.khaledelbalal.me/" class="btn block">Return to home page</a>
+    <a href="https://github.com/KhaledElbalal" class="btn block">Check out my Github</a>
   </div>
 </div>
