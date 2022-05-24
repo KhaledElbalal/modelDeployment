@@ -1,5 +1,7 @@
 #!pip install flask
 #!pip install sklearn
+#!pip install pandas
+#!pip install numpy
 # Load needed libraries
 import pandas as pd
 import numpy as np
