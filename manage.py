@@ -2,9 +2,11 @@
 #!pip install sklearn
 #!pip install pandas
 #!pip install numpy
+#!pip install scipy
 # Load needed libraries
 import pandas as pd
 import numpy as np
+from scipy import stats
 from flask import Flask, jsonify, render_template, request
 import json
 from waitress import serve
@@ -22,6 +24,10 @@ columns = ['BloodPressure', 'BMI', 'Glucose',
 for column in columns:
     mean = df[column][df[column] > 0].mean()
     df[column].replace(0, np.floor(mean), inplace=True)
+# Remove Outliers
+# Outlier removal
+df = pd.DataFrame(stats.trimboth(df, proportiontocut=0.02), columns=[
+                  'Pregnancies', 'BloodPressure', 'BMI', 'Glucose', 'SkinThickness', 'Insulin', 'DiabetesPedigreeFunction', 'Age', 'Outcome'])
 # Data Optimiztion
 df['Pregnancies'][df.Pregnancies > 0] = 1
 auxData = df.drop('Outcome', axis=1)
@@ -32,7 +38,7 @@ df['DiabetesPedigreeFunction'] = df['DiabetesPedigreeFunction'].apply(
 Outcome = df.Outcome
 newDf = df.drop('Outcome', axis=1)
 trainingData_x, testData_x, trainingData_y, testData_y = train_test_split(
-    newDf, Outcome, test_size=0.3, random_state=123)
+    newDf, Outcome, test_size=0.33, random_state=123)
 # Use logisitic regression to fit training data
 logReg.fit(trainingData_x, trainingData_y)
 # Flask server
